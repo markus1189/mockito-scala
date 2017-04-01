@@ -36,10 +36,16 @@ trait MockingSyntax {
 
 trait StubbingSyntax {
   implicit class StubbingOps[A](mockee: => A) {
-    def returns(r1: A, rs: A*): OngoingStubbing[A] =
-      rs.foldLeft(Mockito.when(mockee).thenReturn(r1)) { (stubbing, r) =>
-        stubbing.thenReturn(r)
-      }
+    def returns(r: A): OngoingStubbing[A] =
+      Mockito.when(mockee).thenReturn(r)
+
+    def returns(args: Seq[A]) = args match {
+      case Seq() => throw new IllegalArgumentException("Empty list of return values is not allowed.")
+      case r +: rs =>
+        rs.foldLeft(Mockito.when(mockee).thenReturn(r)) { (stubbing, r1) =>
+          stubbing.thenReturn(r1)
+        }
+    }
 
     def returnsDefault(implicit default: MockDefault[A]): OngoingStubbing[A] =
       Mockito.when(mockee).thenReturn(default.value)
