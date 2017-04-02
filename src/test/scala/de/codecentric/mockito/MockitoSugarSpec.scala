@@ -52,9 +52,30 @@ class MockitoSugarSpec
       assertTypeError("mock[Char]")
       assertTypeError("mock[Boolean]")
     }
+
+    "not allow verification on non-mocks" in {
+      val realFoo = new Foo
+
+      assertTypeError("there.was.one(realFoo).bar")
+    }
+
+    "support verification sugar with 'one'" in {
+      val m = mock[Foo]
+
+      m.bar
+
+      m.baz
+      m.baz
+
+      there.was.one(m).bar
+      there.were.two(m).baz
+      there.were.no(m).qux
+    }
   }
 }
 
 class Foo {
   def bar: String = "foobar"
+  def baz: Double = 42.0
+  def qux: Object = new {}
 }
