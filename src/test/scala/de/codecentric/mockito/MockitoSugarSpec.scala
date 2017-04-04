@@ -47,6 +47,20 @@ class MockitoSugarSpec
       an[RuntimeException] should be thrownBy m.bar
     }
 
+    "allow simple stubbing via returns" in {
+      val m = mock[Foo]
+
+      var n = 0.0
+
+      m.baz answers { _ =>
+        n += 1
+        n
+      }
+
+      m.baz should ===(1.0)
+      m.baz should ===(2.0)
+    }
+
     "not allow mocking of values" in {
       assertTypeError("mock[Int]")
       assertTypeError("mock[Char]")

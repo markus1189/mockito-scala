@@ -1,7 +1,8 @@
 package de.codecentric.mockito
 
-import org.mockito.stubbing.OngoingStubbing
+import org.mockito.stubbing.{Answer, OngoingStubbing}
 import org.mockito._
+import org.mockito.invocation.InvocationOnMock
 
 import scala.concurrent.Future
 import scala.reflect.ClassTag
@@ -40,7 +41,9 @@ trait StubbingSyntax {
       Mockito.when(mockee).thenReturn(r)
 
     def returns(args: Seq[A]) = args match {
-      case Seq() => throw new IllegalArgumentException("Empty list of return values is not allowed.")
+      case Seq() =>
+        throw new IllegalArgumentException(
+          "Empty list of return values is not allowed.")
       case r +: rs =>
         rs.foldLeft(Mockito.when(mockee).thenReturn(r)) { (stubbing, r1) =>
           stubbing.thenReturn(r1)
@@ -56,6 +59,13 @@ trait StubbingSyntax {
 
     def callsRealMethod: OngoingStubbing[A] =
       Mockito.when(mockee).thenCallRealMethod()
+
+    def answers(f: InvocationOnMock => A) =
+      Mockito
+        .when(mockee)
+        .thenAnswer(new Answer[A] {
+          override def answer(invocation: InvocationOnMock): A = f(invocation)
+        })
   }
 }
 
