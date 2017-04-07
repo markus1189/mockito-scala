@@ -5,21 +5,29 @@ lazy val mockitoScala = {
     .settings(
       scalaVersion := "2.12.1",
       scalacOptions ++= customScalacOptions,
-      libraryDependencies ++= Seq(
-        library.mockitoCore,
-        library.scalaTest % Test
-      )
+      libraryDependencies ++= libs,
+      libraryDependencies ++= testLibs
     )
 }
 
-lazy val library = new {
+lazy val libs = {
   object Version {
     final val mockito = "2.7.21"
+  }
+
+  Vector(
+    "org.mockito" % "mockito-core" % Version.mockito
+  )
+}
+
+lazy val testLibs = {
+  object Version {
     final val scalaTest = "3.0.1"
   }
 
-  val mockitoCore = "org.mockito" % "mockito-core" % Version.mockito
-  val scalaTest = "org.scalatest" %% "scalatest" % Version.scalaTest
+  Vector(
+    "org.scalatest" %% "scalatest" % Version.scalaTest
+  ).map(_ % Test)
 }
 
 lazy val customScalacOptions = Seq(
