@@ -47,7 +47,7 @@ class MockitoSugarSpec
       an[RuntimeException] should be thrownBy m.bar
     }
 
-    "allow simple stubbing via returns" in {
+    "allow simple stubbing via 'answers'" in {
       val m = mock[Foo]
 
       var n = 0.0
@@ -85,6 +85,14 @@ class MockitoSugarSpec
       there.were.two(m).baz
       there.were.no(m).qux
     }
+
+    "support arg forwarding" in {
+      val m = mock[Foo]
+
+      m.quz(any[Int]) forwardsArg 0
+
+      m.quz(42) should ===(42)
+    }
   }
 }
 
@@ -92,4 +100,5 @@ class Foo {
   def bar: String = "foobar"
   def baz: Double = 42.0
   def qux: Object = new {}
+  def quz(i: Int): Int = i + 1
 }

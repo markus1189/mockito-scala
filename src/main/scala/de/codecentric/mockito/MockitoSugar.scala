@@ -17,9 +17,8 @@ trait MockitoSugar
     with MockSyntax
 
 trait MockingSyntax {
-  def mockWith[A <: AnyRef: ClassTag](settings: MockSettings): Mocked[A] = {
+  def mockWith[A <: AnyRef: ClassTag](settings: MockSettings): Mocked[A] =
     Mockito.mock[A](runtimeClass, settings).asInstanceOf[Mocked[A]]
-  }
 
   def mock[A <: AnyRef: ClassTag]: Mocked[A] =
     mockWith[A](Mockito.withSettings)
@@ -28,8 +27,7 @@ trait MockingSyntax {
     mockWith[A](Mockito.withSettings.name(name))
 
   def mockSmart[A <: AnyRef: ClassTag]: Mocked[A] =
-    mockWith[A](
-      Mockito.withSettings.defaultAnswer(Mockito.RETURNS_SMART_NULLS))
+    mockWith[A](Mockito.withSettings.defaultAnswer(Mockito.RETURNS_SMART_NULLS))
 
   def mockDeep[A <: AnyRef: ClassTag]: Mocked[A] =
     mockWith[A](Mockito.withSettings.defaultAnswer(Mockito.RETURNS_DEEP_STUBS))
@@ -40,10 +38,9 @@ trait StubbingSyntax {
     def returns(r: A): OngoingStubbing[A] =
       Mockito.when(mockee).thenReturn(r)
 
-    def returns(args: Seq[A]) = args match {
+    def returns(args: Seq[A]): OngoingStubbing[A] = args match {
       case Seq() =>
-        throw new IllegalArgumentException(
-          "Empty list of return values is not allowed.")
+        throw new IllegalArgumentException("Empty list of return values is not allowed.")
       case r +: rs =>
         rs.foldLeft(Mockito.when(mockee).thenReturn(r)) { (stubbing, r1) =>
           stubbing.thenReturn(r1)
@@ -60,19 +57,22 @@ trait StubbingSyntax {
     def callsRealMethod: OngoingStubbing[A] =
       Mockito.when(mockee).thenCallRealMethod()
 
-    def answers(f: InvocationOnMock => A) =
+    def answers(f: InvocationOnMock => A): OngoingStubbing[A] =
       Mockito
         .when(mockee)
         .thenAnswer(new Answer[A] {
           override def answer(invocation: InvocationOnMock): A = f(invocation)
         })
+
+    def forwardsArg(i: Int): OngoingStubbing[A] =
+      answers(_.getArgument[A](i))
   }
 }
 
 trait MockSyntax {
   implicit class MockedOps[A](mock: Mocked[A]) {
     def details: MockingDetails = Mockito.mockingDetails(mock)
-    def reset(): Unit = Mockito.reset(mock)
+    def reset(): Unit           = Mockito.reset(mock)
   }
 }
 
@@ -80,8 +80,8 @@ trait VerificationSyntax {
   def there: There = new There
 
   class There {
-    def are: Are = new Are
-    def was: Was = new Was
+    def are: Are   = new Are
+    def was: Was   = new Was
     def were: Were = new Were
   }
 
@@ -118,11 +118,11 @@ trait VerificationSyntax {
 }
 
 trait ArgumentMatchingSyntax {
-  def any[A: ClassTag]: A = ArgumentMatchers.any[A]()
+  def any[A: ClassTag]: A        = ArgumentMatchers.any[A]()
   def anyNonNull[A: ClassTag]: A = ArgumentMatchers.any[A](runtimeClass[A])
-  def exactly[A](value: A): A = ArgumentMatchers.eq[A](value)
+  def exactly[A](value: A): A    = ArgumentMatchers.eq[A](value)
 
-  def argThat[A](p: A => Boolean) =
+  def argThat[A](p: A => Boolean): A =
     ArgumentMatchers.argThat[A](new ArgumentMatcher[A] {
       override def matches(argument: A): Boolean = p(argument)
     })
@@ -137,12 +137,11 @@ object MockDefault {
     override def value: A = x
   }
 
-  implicit val defaultInt: MockDefault[Int] = fromValue(0)
+  implicit val defaultInt: MockDefault[Int]       = fromValue(0)
   implicit val defaultString: MockDefault[String] = fromValue("")
 
   implicit def defaultOption[A]: MockDefault[Option[A]] = fromValue(None)
 
-  implicit def defaultFuture[A](
-      implicit D: MockDefault[A]): MockDefault[Future[A]] =
+  implicit def defaultFuture[A](implicit D: MockDefault[A]): MockDefault[Future[A]] =
     fromValue(Future.successful(D.value))
 }
