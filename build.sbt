@@ -5,7 +5,8 @@ lazy val mockitoScala = {
     .settings(
       scalacOptions ++= customScalacOptions,
       libraryDependencies ++= libs,
-      libraryDependencies ++= testLibs
+      libraryDependencies ++= testLibs,
+      git.useGitDescribe := true
     )
 }
 
