@@ -1,4 +1,4 @@
-package de.codecentric.mockito
+package org.markushauck.mockito
 
 import org.mockito.stubbing.{Answer, OngoingStubbing}
 import org.mockito._

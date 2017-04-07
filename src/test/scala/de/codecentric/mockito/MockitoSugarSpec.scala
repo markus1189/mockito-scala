@@ -1,4 +1,4 @@
-package de.codecentric.mockito
+package org.markushauck.mockito
 
 import org.scalatest._
 import org.scalactic._

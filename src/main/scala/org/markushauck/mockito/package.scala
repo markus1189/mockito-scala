@@ -1,4 +1,4 @@
-package de.codecentric
+package org.markushauck
 
 import scala.reflect.ClassTag
 
