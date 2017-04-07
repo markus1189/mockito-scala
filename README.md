@@ -1,5 +1,9 @@
 ## Mockito Sugar for Scala
 
+[![Build Status](https://travis-ci.org/markus1189/mockito-scala.svg?branch=master)](https://travis-ci.org/markus1189/mockito-scala)
+[![Maven Central](https://img.shields.io/maven-central/v/org.markushauck/mockito-scala_2.12.svg)](https://maven-badges.herokuapp.com/maven-central/org.markushauck/mockito-scala_2.12)
+
+
 ### Overview
 
 Inspired by [specs2](https://etorreborre.github.io/specs2/), this is a
