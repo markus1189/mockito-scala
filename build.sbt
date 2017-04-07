@@ -3,7 +3,6 @@ lazy val mockitoScala = {
     .in(file("."))
     .enablePlugins(GitVersioning)
     .settings(
-      scalaVersion := "2.12.1",
       scalacOptions ++= customScalacOptions,
       libraryDependencies ++= libs,
       libraryDependencies ++= testLibs
