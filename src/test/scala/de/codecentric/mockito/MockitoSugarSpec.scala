@@ -3,10 +3,7 @@ package org.markushauck.mockito
 import org.scalatest._
 import org.scalactic._
 
-class MockitoSugarSpec
-    extends WordSpec
-    with Matchers
-    with TypeCheckedTripleEquals {
+class MockitoSugarSpec extends WordSpec with Matchers with TypeCheckedTripleEquals {
   import MockitoSugar._
 
   "MockitoSugar" should {
@@ -30,7 +27,7 @@ class MockitoSugarSpec
 
     "allow chained stubbing via multiple arguments" in {
       val args = Seq.tabulate(5)(_.toString)
-      val m = mock[Foo]
+      val m    = mock[Foo]
 
       m.bar returns args
 
@@ -97,8 +94,8 @@ class MockitoSugarSpec
 }
 
 class Foo {
-  def bar: String = "foobar"
-  def baz: Double = 42.0
-  def qux: Object = new {}
+  def bar: String      = "foobar"
+  def baz: Double      = 42.0
+  def qux: Object      = new {}
   def quz(i: Int): Int = i + 1
 }
