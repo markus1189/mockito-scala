@@ -34,7 +34,9 @@ lazy val customScalacOptions = Seq(
   "-deprecation",
   "-unchecked",
   "-language:_",
+  // format: off
   "-encoding", "UTF-8",
+  // format: on
   "-Xlint",
   "-Ywarn-inaccessible",
   "-Ywarn-infer-any",

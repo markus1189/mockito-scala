@@ -17,55 +17,67 @@ trait MockitoSugar
     with MockSyntax
 
 trait MockingSyntax {
-  def mockWith[A <: AnyRef: ClassTag](settings: MockSettings): Mocked[A] =
+  def mockWith[A <: AnyRef: ClassTag](settings: MockSettings): Mocked[A] = {
     Mockito.mock[A](runtimeClass, settings).asInstanceOf[Mocked[A]]
+  }
 
-  def mock[A <: AnyRef: ClassTag]: Mocked[A] =
+  def mock[A <: AnyRef: ClassTag]: Mocked[A] = {
     mockWith[A](Mockito.withSettings)
+  }
 
-  def mockNamed[A <: AnyRef: ClassTag](name: String): Mocked[A] =
+  def mockNamed[A <: AnyRef: ClassTag](name: String): Mocked[A] = {
     mockWith[A](Mockito.withSettings.name(name))
+  }
 
-  def mockSmart[A <: AnyRef: ClassTag]: Mocked[A] =
+  def mockSmart[A <: AnyRef: ClassTag]: Mocked[A] = {
     mockWith[A](Mockito.withSettings.defaultAnswer(Mockito.RETURNS_SMART_NULLS))
+  }
 
-  def mockDeep[A <: AnyRef: ClassTag]: Mocked[A] =
+  def mockDeep[A <: AnyRef: ClassTag]: Mocked[A] = {
     mockWith[A](Mockito.withSettings.defaultAnswer(Mockito.RETURNS_DEEP_STUBS))
+  }
 }
 
 trait StubbingSyntax {
   implicit class StubbingOps[A](mockee: => A) {
-    def returns(r: A): OngoingStubbing[A] =
+    def returns(r: A): OngoingStubbing[A] = {
       Mockito.when(mockee).thenReturn(r)
-
-    def returns(args: Seq[A]): OngoingStubbing[A] = args match {
-      case Seq() =>
-        throw new IllegalArgumentException("Empty list of return values is not allowed.")
-      case r +: rs =>
-        rs.foldLeft(Mockito.when(mockee).thenReturn(r)) { (stubbing, r1) =>
-          stubbing.thenReturn(r1)
-        }
     }
 
-    def returnsDefault(implicit default: MockDefault[A]): OngoingStubbing[A] =
+    def returns(args: Seq[A]): OngoingStubbing[A] = {
+      args match {
+        case Seq() =>
+          throw new IllegalArgumentException("Empty list of return values is not allowed.")
+        case r +: rs =>
+          rs.foldLeft(Mockito.when(mockee).thenReturn(r)) { (stubbing, r1) =>
+            stubbing.thenReturn(r1)
+          }
+      }
+    }
+
+    def returnsDefault(implicit default: MockDefault[A]): OngoingStubbing[A] = {
       Mockito.when(mockee).thenReturn(default.value)
+    }
 
     def throws[E <: Throwable](e: E): OngoingStubbing[A] = {
       Mockito.when(mockee).thenThrow(e)
     }
 
-    def callsRealMethod: OngoingStubbing[A] =
+    def callsRealMethod: OngoingStubbing[A] = {
       Mockito.when(mockee).thenCallRealMethod()
+    }
 
-    def answers(f: InvocationOnMock => A): OngoingStubbing[A] =
+    def answers(f: InvocationOnMock => A): OngoingStubbing[A] = {
       Mockito
         .when(mockee)
         .thenAnswer(new Answer[A] {
           override def answer(invocation: InvocationOnMock): A = f(invocation)
         })
+    }
 
-    def forwardsArg(i: Int): OngoingStubbing[A] =
+    def forwardsArg(i: Int): OngoingStubbing[A] = {
       answers(_.getArgument[A](i))
+    }
   }
 }
 
@@ -86,34 +98,53 @@ trait VerificationSyntax {
   }
 
   class Are {
-    def noMoreInteractions[A](mock: Mocked[A]): Unit =
+    def noMoreInteractions[A](mock: Mocked[A]): Unit = {
       Mockito.verifyNoMoreInteractions(mock)
+    }
   }
 
   class Was {
-    def one[A](mock: Mocked[A]): Mocked[A] =
+    def one[A](mock: Mocked[A]): Mocked[A] = {
       Mockito.verify(mock, Mockito.times(1))
-    def atLeastOne[A](mock: Mocked[A]): Mocked[A] =
+    }
+
+    def atLeastOne[A](mock: Mocked[A]): Mocked[A] = {
       Mockito.verify(mock, Mockito.atLeast(1))
-    def atMostOne[A](mock: Mocked[A]): Mocked[A] =
+    }
+
+    def atMostOne[A](mock: Mocked[A]): Mocked[A] = {
       Mockito.verify(mock, Mockito.atMost(1))
-    def only[A](mock: Mocked[A]): Mocked[A] =
+    }
+
+    def only[A](mock: Mocked[A]): Mocked[A] = {
       Mockito.verify(mock, Mockito.only())
+    }
   }
 
   class Were {
-    def two[A](mock: Mocked[A]): Mocked[A] =
+    def two[A](mock: Mocked[A]): Mocked[A] = {
       Mockito.verify(mock, Mockito.times(2))
-    def exactly[A](n: Int)(mock: Mocked[A]): Mocked[A] =
+    }
+
+    def exactly[A](n: Int)(mock: Mocked[A]): Mocked[A] = {
       Mockito.verify(mock, Mockito.times(n))
-    def no[A](mock: Mocked[A]): Mocked[A] =
+    }
+
+    def no[A](mock: Mocked[A]): Mocked[A] = {
       Mockito.verify(mock, Mockito.never())
-    def atLeast[A](n: Int)(mock: Mocked[A]): Mocked[A] =
+    }
+
+    def atLeast[A](n: Int)(mock: Mocked[A]): Mocked[A] = {
       Mockito.verify(mock, Mockito.atLeast(n))
-    def atMost[A](n: Int)(mock: Mocked[A]): Mocked[A] =
+    }
+
+    def atMost[A](n: Int)(mock: Mocked[A]): Mocked[A] = {
       Mockito.verify(mock, Mockito.atMost(n))
-    def zeroInteractions[A](mock: Mocked[A]): Unit =
+    }
+
+    def zeroInteractions[A](mock: Mocked[A]): Unit = {
       Mockito.verifyZeroInteractions(mock)
+    }
   }
 }
 
@@ -122,10 +153,11 @@ trait ArgumentMatchingSyntax {
   def anyNonNull[A: ClassTag]: A = ArgumentMatchers.any[A](runtimeClass[A])
   def exactly[A](value: A): A    = ArgumentMatchers.eq[A](value)
 
-  def argThat[A](p: A => Boolean): A =
+  def argThat[A](p: A => Boolean): A = {
     ArgumentMatchers.argThat[A](new ArgumentMatcher[A] {
       override def matches(argument: A): Boolean = p(argument)
     })
+  }
 }
 
 trait MockDefault[+A] {
@@ -142,6 +174,7 @@ object MockDefault {
 
   implicit def defaultOption[A]: MockDefault[Option[A]] = fromValue(None)
 
-  implicit def defaultFuture[A](implicit D: MockDefault[A]): MockDefault[Future[A]] =
+  implicit def defaultFuture[A](implicit D: MockDefault[A]): MockDefault[Future[A]] = {
     fromValue(Future.successful(D.value))
+  }
 }
