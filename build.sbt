@@ -9,6 +9,7 @@ lazy val mockitoScala = {
       libraryDependencies ++= testLibs,
       git.useGitDescribe := true
     )
+    .settings(publishSettings)
 }
 
 lazy val libs = {
@@ -39,9 +40,41 @@ lazy val customScalacOptions = Seq(
   "-encoding", "UTF-8",
   // format: on
   "-Xlint",
+  "-Xfatal-warnings",
   "-Ywarn-inaccessible",
   "-Ywarn-infer-any",
   "-Ywarn-nullary-override",
   "-Ywarn-nullary-unit",
   "-Ywarn-value-discard"
+)
+
+lazy val publishSettings = Seq(
+  useGpg := true,
+  publishMavenStyle := true,
+  pomIncludeRepository := { _ => false },
+  licenses += ("Apache 2.0", url("http://www.apache.org/licenses/LICENSE-2.0")),
+  homepage := Some(url("https://github.com/markus1189/mockito-scala")),
+  scmInfo := Some(
+    ScmInfo(
+      url("https://github.com/markus1189/mockito-scala"),
+      "scm:git@github.com:markus1189/mockito-scala.git"
+    )
+  ),
+  developers := List(
+    Developer(
+      id    = "markus1189",
+      name  = "Markus Hauck",
+      email = "markus1189@gmail.com",
+      url   = url("https://github.com/markus1189")
+    )
+  ),
+  publishTo := {
+    val nexus = "https://oss.sonatype.org/"
+    if (isSnapshot.value) {
+      Some("snapshots" at nexus + "content/repositories/snapshots")
+    } else {
+      Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+    }
+  },
+  publishArtifact in Test := false
 )
