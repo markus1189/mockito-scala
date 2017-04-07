@@ -14,7 +14,7 @@ lazy val mockitoScala = {
 
 lazy val library = new {
   object Version {
-    final val mockito = "2.7.20"
+    final val mockito = "2.7.21"
     final val scalaTest = "3.0.1"
   }
 
