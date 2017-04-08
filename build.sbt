@@ -1,3 +1,5 @@
+import ReleaseTransformations._
+
 lazy val mockitoScala = {
   project
     .in(file("."))
@@ -77,5 +79,18 @@ lazy val publishSettings = Seq(
       Some("releases"  at nexus + "service/local/staging/deploy/maven2")
     }
   },
-  publishArtifact in Test := false
+  publishArtifact in Test := false,
+  releaseProcess := Seq[ReleaseStep](
+    checkSnapshotDependencies,
+    inquireVersions,
+    runClean,
+    runTest,
+    setReleaseVersion,
+    commitReleaseVersion,
+    tagRelease,
+    ReleaseStep(action = Command.process("publishSigned", _), enableCrossBuild = true),
+    setNextVersion,
+    commitNextVersion,
+    ReleaseStep(action = Command.process("sonatypeReleaseAll", _), enableCrossBuild = true)
+  )
 )
