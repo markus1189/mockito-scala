@@ -79,6 +79,7 @@ lazy val publishSettings = Seq(
     }
   },
   publishArtifact in Test := false,
+  releaseCrossBuild := true,
   releaseProcess := Seq[ReleaseStep](
     checkSnapshotDependencies,
     inquireVersions,
