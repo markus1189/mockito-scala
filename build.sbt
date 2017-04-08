@@ -52,6 +52,7 @@ lazy val publishSettings = Seq(
   useGpg := true,
   publishMavenStyle := true,
   pomIncludeRepository := { _ => false },
+  organization := "org.markushauck",
   licenses += ("Apache 2.0", url("http://www.apache.org/licenses/LICENSE-2.0")),
   homepage := Some(url("https://github.com/markus1189/mockito-scala")),
   scmInfo := Some(
