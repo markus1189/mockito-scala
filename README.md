@@ -32,10 +32,27 @@ API.  The goals are:
 
 ### How?
 
-To use the provided sugar, mixing
-the
+Add it to your `sbt` build:
+
+```
+libraryDependencies ++= Seq(
+  "org.markushauck" %% "mockitoscala" % "0.2.7"
+)
+
+```
+
+or import it in `Ammonite`:
+
+```
+import $ivy.`org.markushauck::mockitoscala:0.2.7`
+```
+
+Finally, extend
+from
 [MockitoSugar](https://github.com/markus1189/mockito-scala/blob/master/src/main/scala/de/codecentric/mockito/MockitoSugar.scala) trait
-into your suite or use the companion object that extends from it.
+in your test suite or import all members of the companion object.
+
+### Examples!
 
 ## Contributing
 
