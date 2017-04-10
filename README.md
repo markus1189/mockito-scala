@@ -1,7 +1,7 @@
 ## Mockito Sugar for Scala
 
 [![Build Status](https://travis-ci.org/markus1189/mockito-scala.svg?branch=master)](https://travis-ci.org/markus1189/mockito-scala)
-[![Maven Central](https://img.shields.io/maven-central/v/org.markushauck/mockitoscala_2.12.svg)](https://maven-badges.herokuapp.com/maven-central/org.markushauck/mockitoscala_2.12)
+[![Maven Central](https://img.shields.io/maven-central/v/org/markushauck/mockitoscala_2.12.svg)](https://maven-badges.herokuapp.com/maven-central/org/markushauck/mockitoscala_2.12)
 
 
 ### Overview
@@ -49,10 +49,15 @@ import $ivy.`org.markushauck::mockitoscala:0.2.7`
 
 Finally, extend
 from
-[MockitoSugar](https://github.com/markus1189/mockito-scala/blob/master/src/main/scala/de/codecentric/mockito/MockitoSugar.scala) trait
+[MockitoSugar](https://github.com/markus1189/mockito-scala/blob/master/src/main/scala/org/markushauck/mockito/MockitoSugar.scala) trait
 in your test suite or import all members of the companion object.
 
 ### Examples!
+
+Please
+see
+[Examples](https://github.com/markus1189/mockito-scala/blob/master/src/test/scala/org/markushauck/mockito/Examples.scala) for
+an overview of what is currently possible.
 
 ## Contributing
 
