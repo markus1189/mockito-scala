@@ -1,7 +1,7 @@
 ## Mockito Sugar for Scala
 
 [![Build Status](https://travis-ci.org/markus1189/mockito-scala.svg?branch=master)](https://travis-ci.org/markus1189/mockito-scala)
-[![Maven Central](https://img.shields.io/maven-central/v/org/markushauck/mockitoscala_2.12.svg)](https://maven-badges.herokuapp.com/maven-central/org/markushauck/mockitoscala_2.12)
+[![Maven Central](https://img.shields.io/maven-central/v/org.markushauck/mockitoscala_2.12.svg)](https://maven-badges.herokuapp.com/maven-central/org.markushauck/mockitoscala_2.12)
 
 
 ### Overview
