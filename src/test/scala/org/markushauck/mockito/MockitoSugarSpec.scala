@@ -65,9 +65,10 @@ class MockitoSugarSpec extends WordSpec with Matchers with TypeCheckedTripleEqua
     }
 
     "not allow verification on non-mocks" in {
-      val realFoo = new Foo
-
-      assertTypeError("there.was.one(realFoo).bar")
+      assertTypeError("""
+val realFoo = new Foo
+there.was.one(realFoo).bar
+""")
     }
 
     "support verification sugar with 'one'" in {
