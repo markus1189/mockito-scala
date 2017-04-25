@@ -44,7 +44,7 @@ trait StubbingSyntax {
       Mockito.when(mockee).thenReturn(r)
     }
 
-    def returns(args: Seq[A]): OngoingStubbing[A] = {
+    def returnsMulti(args: Seq[A]): OngoingStubbing[A] = {
       args match {
         case Seq() =>
           throw new IllegalArgumentException("Empty list of return values is not allowed.")

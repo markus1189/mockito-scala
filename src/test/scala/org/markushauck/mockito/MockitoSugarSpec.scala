@@ -29,7 +29,7 @@ class MockitoSugarSpec extends WordSpec with Matchers with TypeCheckedTripleEqua
       val args = Seq.tabulate(5)(_.toString)
       val m    = mock[Foo]
 
-      m.bar returns args
+      m.bar returnsMulti args
 
       args.foreach { arg =>
         m.bar should ===(arg)

@@ -25,7 +25,7 @@ object Examples extends App with MockitoSugar {
   { // Specifying multiple returns
     val m = mock[Foo]
 
-    m.bar returns Seq("1", "2", "3")
+    m.bar returnsMulti Seq("1", "2", "3")
     m.bar // => "1"
     m.bar // => "2"
     m.bar // => "3"
