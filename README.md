@@ -36,7 +36,7 @@ Add it to your `sbt` build:
 
 ```
 libraryDependencies ++= Seq(
-  "org.markushauck" %% "mockitoscala" % "0.2.7"
+  "org.markushauck" %% "mockitoscala" % "0.3.0"
 )
 
 ```
@@ -44,7 +44,7 @@ libraryDependencies ++= Seq(
 or import it in `Ammonite`:
 
 ```
-import $ivy.`org.markushauck::mockitoscala:0.2.7`
+import $ivy.`org.markushauck::mockitoscala:0.3.0`
 ```
 
 Finally, extend
