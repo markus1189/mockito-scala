@@ -171,6 +171,7 @@ object MockDefault {
 
   implicit val defaultInt: MockDefault[Int]       = fromValue(0)
   implicit val defaultString: MockDefault[String] = fromValue("")
+  implicit val defaultUnit: MockDefault[Unit]     = fromValue(())
 
   implicit def defaultOption[A]: MockDefault[Option[A]] = fromValue(None)
 
