@@ -29,6 +29,7 @@ object Examples extends App with MockitoSugar {
     m.bar // => "1"
     m.bar // => "2"
     m.bar // => "3"
+    m.bar // => "3" (BEWARE: subsequent invocations return the last element)
   }
 
   { // Using default returns
