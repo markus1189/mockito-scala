@@ -1,3 +1,7 @@
+# .-=] ABANDONED [=-.
+
+This project is abandoned and not maintained any more, you might want to have a look at https://github.com/mockito/mockito-scala
+
 ## Mockito Sugar for Scala
 
 [![Build Status](https://travis-ci.org/markus1189/mockito-scala.svg?branch=master)](https://travis-ci.org/markus1189/mockito-scala)
